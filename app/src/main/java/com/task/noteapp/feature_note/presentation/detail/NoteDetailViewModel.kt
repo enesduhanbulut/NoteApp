@@ -3,6 +3,7 @@ package com.task.noteapp.feature_note.presentation.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.task.noteapp.feature_note.domain.FormattedDate
 import com.task.noteapp.feature_note.domain.model.Note
 import com.task.noteapp.feature_note.domain.use_case.*
 import com.task.noteapp.feature_note.presentation.NoteColor
@@ -80,7 +81,7 @@ class NoteDetailViewModel @Inject constructor(
                     noteDetailState.body = it.body
                     noteDetailState.color = NoteColor.values()[it.color]
                     noteDetailState.url = it.url
-                    noteDetailState.date = it.createDate.toString()
+                    noteDetailState.date = FormattedDate.formatDate(it.createDate)
                     noteDetailUiStateLiveData.postValue(
                         NoteDetailUIEvent.UpdateUI(noteDetailState)
                     )
@@ -148,6 +149,7 @@ class NoteDetailViewModel @Inject constructor(
     private fun validateUrlAndSetImage(url: String) {
         validateUrlUseCase.execute(url).let { isValid ->
             if (isValid) {
+                this.noteDetailState.url = url
                 noteDetailUiStateLiveData.postValue(
                     NoteDetailUIEvent.ShowImage(
                         url
@@ -173,7 +175,7 @@ class NoteDetailViewModel @Inject constructor(
         var body: String = "",
         var url: String = "",
         var color: NoteColor = NoteColor.YELLOW,
-        var date: String = Calendar.getInstance().time.toString()
+        var date: String = FormattedDate.newInstance()
     )
 
 }

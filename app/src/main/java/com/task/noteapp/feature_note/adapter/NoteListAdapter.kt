@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.task.noteapp.R
+import com.task.noteapp.feature_note.domain.FormattedDate
 import com.task.noteapp.feature_note.domain.model.Note
 import com.task.noteapp.feature_note.presentation.NoteColor
 
@@ -30,7 +31,7 @@ class NoteListAdapter(private val clickListener: (Note) -> Unit) :
         fun bind(note: Note) {
             textViewHead.text = note.head
             textViewContent.text = note.body
-            textViewDate.text = note.createDate.toString()
+            textViewDate.text = FormattedDate.formatDate(note.createDate)
             Glide.with(view).asBitmap().load(note.url).into(imageViewImage)
             layoutNote.setBackgroundColor(
                 ContextCompat.getColor(
