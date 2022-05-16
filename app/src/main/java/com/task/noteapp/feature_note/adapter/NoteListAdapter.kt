@@ -1,8 +1,10 @@
 package com.task.noteapp.feature_note.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -28,11 +30,26 @@ class NoteListAdapter(private val clickListener: (Note) -> Unit) :
         private val textViewDate: TextView = view.findViewById(R.id.textViewDate)
         private val imageViewImage: ImageView = view.findViewById(R.id.imageViewImage)
         private val layoutNote: LinearLayout = view.findViewById(R.id.layoutNote)
+        private val imageButtonEdited: ImageButton = view.findViewById(R.id.imageButtonEdited)
         fun bind(note: Note) {
             textViewHead.text = note.head
             textViewContent.text = note.body
             textViewDate.text = FormattedDate.formatDate(note.createDate)
             Glide.with(view).asBitmap().load(note.url).into(imageViewImage)
+            note.isEdited.let {
+                if (it) {
+                    imageButtonEdited.visibility = View.VISIBLE
+                    imageButtonEdited.setOnClickListener {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            imageButtonEdited.tooltipText = "Last Edit Time \n " + FormattedDate.formatDate(
+                                note.lastModifiedDate
+                            ) + " "
+                        }
+                    }
+                } else {
+                    imageButtonEdited.visibility = View.GONE
+                }
+            }
             layoutNote.setBackgroundColor(
                 ContextCompat.getColor(
                     view.context,

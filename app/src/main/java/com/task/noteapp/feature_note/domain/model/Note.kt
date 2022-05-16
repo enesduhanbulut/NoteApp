@@ -15,7 +15,8 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
     var folderId: Int = 0
-    var lastModifiedData: Date = Date()
+    var lastModifiedDate: Date = Date()
+    var isEdited = false
     var createDate: Date = Date()
     var isFavorite: Boolean = false
     var isTrash: Boolean = false

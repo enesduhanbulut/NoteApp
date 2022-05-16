@@ -124,6 +124,8 @@ class NoteDetailViewModel @Inject constructor(
         currentNote!!.body = this.noteDetailState.body
         currentNote!!.color = this.noteDetailState.color.ordinal
         currentNote!!.url = this.noteDetailState.url
+        currentNote!!.isEdited = true
+        currentNote!!.lastModifiedDate = Calendar.getInstance().time
         updateNoteUseCase.execute(
             currentNote!!
         )

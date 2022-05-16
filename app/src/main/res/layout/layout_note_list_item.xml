@@ -7,6 +7,7 @@
     android:layout_margin="@dimen/smallMargin">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
@@ -48,9 +49,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/smallMargin"
                     android:background="@color/transparent"
-                    android:maxLines="2"
                     android:gravity="left|top"
                     android:hint="@string/hint_body"
+                    android:maxLines="2"
                     android:textAlignment="textStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -65,13 +66,35 @@
                     android:scaleType="fitXY"
                     android:visibility="visible" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textViewDate"
-                    style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/smallMargin"
-                    tools:text="20/04/2022" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textViewDate"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/smallMargin"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="20/04/2022" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonEdited"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/smallMargin"
+                        android:adjustViewBounds="true"
+                        android:background="@color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_edit_icon"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>

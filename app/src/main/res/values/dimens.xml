@@ -3,6 +3,7 @@
     <dimen name="tinyMargin">5dp</dimen>
     <dimen name="smallMargin">10dp</dimen>
     <dimen name="mediumMargin">20dp</dimen>
+    <dimen name="largeMargin">50dp</dimen>
     <dimen name="noteViewBodyLength">256dp</dimen>
     <dimen name="color_layout_height">30dp</dimen>
     <dimen name="roundedButtonHeight">20dp</dimen>
