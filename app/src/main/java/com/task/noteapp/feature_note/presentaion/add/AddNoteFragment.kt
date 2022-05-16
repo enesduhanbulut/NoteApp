@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.task.noteapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,6 +54,13 @@ class AddNoteFragment : Fragment() {
                 }
                 is UIEvent.ClearImage -> {
                     Glide.with(this).clear(imageViewImage)
+                }
+                is
+                UIEvent.ShowError -> {
+                   Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
+                }
+                is UIEvent.ShowMessage -> {
+                    Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
                 }
             }
         }
@@ -104,7 +112,7 @@ class AddNoteFragment : Fragment() {
 
         buttonAdd.apply {
             setOnClickListener {
-                addNoteViewModel.onEvent(AddEvent.SaveNote)
+                addNoteViewModel.onEvent(AddEvent.ClickedSave)
             }
         }
     }

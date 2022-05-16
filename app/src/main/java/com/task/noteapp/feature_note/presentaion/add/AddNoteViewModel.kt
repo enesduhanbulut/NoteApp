@@ -41,6 +41,13 @@ class AddNoteViewModel @Inject constructor(var addNoteUseCase: AddNoteUseCase) :
                         uiStateLiveData.postValue(UIEvent.ClearImage(event.value))
                     }
                 }
+            } is AddEvent.ClickedSave -> {
+                addNoteUseCase.execute(noteState.head, noteState.body, noteState.color, noteState.url)
+                    .subscribe( {
+                        uiStateLiveData.postValue(UIEvent.ShowMessage("Note Saved"))
+                    }, {
+                        uiStateLiveData.postValue(it.message?.let { it1 -> UIEvent.ShowError(it1) })
+                    })
             }
 
         }
