@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="tinyMargin">5dp</dimen>
     <dimen name="smallMargin">10dp</dimen>
     <dimen name="mediumMargin">20dp</dimen>
     <dimen name="noteViewBodyLength">256dp</dimen>
