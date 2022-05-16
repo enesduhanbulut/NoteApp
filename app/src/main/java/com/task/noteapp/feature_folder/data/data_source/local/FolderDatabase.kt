@@ -1,4 +1,4 @@
-package com.task.noteapp.feature_note.data.data_source.local
+package com.task.noteapp.feature_folder.data.data_source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
