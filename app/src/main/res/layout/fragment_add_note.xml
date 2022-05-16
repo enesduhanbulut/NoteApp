@@ -3,97 +3,111 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:layout_margin="@dimen/smallMargin">
 
     <LinearLayout
         android:id="@+id/layoutColors"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_layout_height"
+        android:layout_marginHorizontal="@dimen/smallMargin"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent" >
-    </LinearLayout>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewHead"
-        android:layout_marginTop="@dimen/mediumMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="@dimen/smallMargin"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf=" parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutColors">
 
-        <EditText
-            android:id="@+id/editTextHead"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+
+        <ScrollView
+            android:id="@+id/scrollViewBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/defaultNoteColor"
-            android:hint="@string/hint_head"
-            android:maxLines="1"
-            android:textAlignment="center"
-            tools:text="Sample Head" />
+            android:layout_marginBottom="100dp">
+
+            <LinearLayout
+                android:id="@+id/layoutNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/yellow_post_it_body"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/editTextHead"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/mediumMargin"
+                    android:background="@color/transparent"
+                    android:backgroundTint="@color/yellow_post_it_head"
+                    android:hint="@string/hint_head"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    tools:text="Sample Head" />
+
+                <EditText
+                    android:id="@+id/editTextBody"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="@dimen/mediumMargin"
+                    android:background="@color/transparent"
+                    android:gravity="left|top"
+                    android:hint="@string/hint_body"
+                    android:textAlignment="textStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Sample Body" />
+
+                <EditText
+                    android:id="@+id/editTextURL"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/smallMargin"
+                    android:background="@color/transparent"
+                    android:hint="@string/image_url">
+
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/imageViewImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/mediumMargin"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bird"
+                    android:visibility="visible" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewDate"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/mediumMargin"
+                    tools:text="20/04/2022" />
+            </LinearLayout>
+
+        </ScrollView>
+
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewBody"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/defaultNoteColor"
+        android:layout_marginHorizontal="@dimen/mediumMargin"
+        android:backgroundTint="@color/secondaryColor"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardViewHead">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/editTextBody"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/smallMargin"
-                android:hint="@string/hint_body"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Sample Body" />
-
-            <EditText
-                android:id="@+id/editTextURL"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/mediumMargin"
-                android:hint="@string/image_url"
-                app:layout_constraintTop_toBottomOf="@id/editTextBody">
-
-            </EditText>
-
-            <ImageView
-                android:id="@+id/imageViewImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/mediumMargin"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/bird"
-                app:layout_constraintTop_toBottomOf="@id/editTextURL" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewDate"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageViewImage"
-                tools:text="20/04/2022" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

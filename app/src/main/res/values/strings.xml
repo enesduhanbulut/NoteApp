@@ -3,4 +3,5 @@
     <string name="image_url">image url</string>
     <string name="hint_head">Title</string>
     <string name="hint_body">Content</string>
+    <string name="add">Add</string>
 </resources>
