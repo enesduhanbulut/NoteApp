@@ -1,17 +1,16 @@
 package com.task.noteapp.feature_note.presentation.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
@@ -22,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
+    private lateinit var buttonDelete: Button
     private lateinit var viewType: ViewType
     private lateinit var layoutNote: LinearLayout
     private lateinit var buttonAdd: MaterialButton
@@ -49,12 +49,30 @@ class NoteDetailFragment : Fragment() {
         initViews(rootView)
         noteDetailViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
             when (it) {
-                is NoteDetailUIEvent.UpdateUI->{
+                is NoteDetailUIEvent.UpdateUI -> {
                     editTextHead.setText(it.value.head)
                     textViewDate.text = it.value.date
                     editTextBody.setText(it.value.body)
                     editTextURL.setText(it.value.url)
                     layoutNote.setBackgroundColorWithInt(it.value.color.getBodyColor())
+                }
+                is NoteDetailUIEvent.DeleteNote -> {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle(getString(R.string.delete_note_title))
+                        .setMessage(getString(R.string.delete_note_warning))
+                        .setPositiveButton(getString(R.string.Yes)) { dialog, which ->
+                            noteDetailViewModel.onEvent(NoteDetailEvent.DeleteNote)
+                            Snackbar.make(
+                                requireView(),
+                                getString(R.string.note_deleted),
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            requireActivity().onBackPressed()
+                        }
+                        .setNegativeButton(getString(R.string.No)) { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .create().show()
                 }
                 is NoteDetailUIEvent.ShowImage -> {
                     Glide.with(this).asBitmap().load(it.value).into(imageViewImage)
@@ -69,6 +87,11 @@ class NoteDetailFragment : Fragment() {
                 }
                 is NoteDetailUIEvent.ShowMessage -> {
                     Snackbar.make(layoutNote, it.message, Snackbar.LENGTH_LONG).show()
+                }
+                is NoteDetailUIEvent.Finish -> {
+                    Navigation.findNavController(requireView()).navigate(
+                        R.id.action_noteDetailFragment_to_noteListFragment
+                    )
                 }
             }
         }
@@ -98,6 +121,7 @@ class NoteDetailFragment : Fragment() {
         editTextURL = rootView.findViewById(R.id.editTextURL)
         editTextBody = rootView.findViewById(R.id.editTextBody)
         buttonAdd = rootView.findViewById(R.id.buttonAdd)
+        buttonDelete = rootView.findViewById(R.id.buttonDelete)
         layoutNote = rootView.findViewById(R.id.layoutNote)
         textViewDate = rootView.findViewById(R.id.textViewDate)
 
@@ -130,6 +154,17 @@ class NoteDetailFragment : Fragment() {
             } else {
                 getString(R.string.edit)
             }
+        }
+        if (viewType == ViewType.EDIT) {
+            buttonDelete.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    noteDetailViewModel.onEvent(NoteDetailEvent.ClickedDelete)
+                }
+                visibility = View.VISIBLE
+            }
+        } else {
+            buttonDelete.visibility = View.GONE
         }
     }
 

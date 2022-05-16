@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.addPage -> Navigation.findNavController(this,R.id.fragmentContainer)
                     .navigate(R.id.noteDetailFragment)
             }
-            clearBackStack()
             true
         }
     }

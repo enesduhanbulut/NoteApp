@@ -11,5 +11,7 @@ sealed class NoteDetailEvent {
     data class EnteredURL(val value: String) : NoteDetailEvent()
     object ClickedSave : NoteDetailEvent()
     object ClickedUpdate : NoteDetailEvent()
+    object ClickedDelete : NoteDetailEvent()
+    object DeleteNote : NoteDetailEvent()
 }
 

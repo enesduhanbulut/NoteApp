@@ -7,5 +7,7 @@ sealed class NoteDetailUIEvent{
     data class ShowError(val message: String): NoteDetailUIEvent()
     data class ShowMessage(val message: String) : NoteDetailUIEvent()
     data class UpdateUI(val value: NoteDetailViewModel.NoteDetailState) : NoteDetailUIEvent()
+    object DeleteNote : NoteDetailUIEvent()
+    object Finish : NoteDetailUIEvent()
 }
 

@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.task.noteapp.feature_note.domain.model.Note
-import com.task.noteapp.feature_note.domain.use_case.AddNoteUseCase
-import com.task.noteapp.feature_note.domain.use_case.GetNoteUseCase
-import com.task.noteapp.feature_note.domain.use_case.UpdateNoteUseCase
-import com.task.noteapp.feature_note.domain.use_case.ValidateUrlUseCase
+import com.task.noteapp.feature_note.domain.use_case.*
 import com.task.noteapp.feature_note.presentation.NoteColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
@@ -17,6 +14,7 @@ import javax.inject.Inject
 class NoteDetailViewModel @Inject constructor(
     private var addNoteUseCase: AddNoteUseCase,
     private var getNoteUseCase: GetNoteUseCase,
+    private var deleteNoteUseCase: DeleteNoteUseCase,
     private var updateNoteUseCase: UpdateNoteUseCase
 
 ) : ViewModel() {
@@ -47,8 +45,29 @@ class NoteDetailViewModel @Inject constructor(
             is NoteDetailEvent.Init -> {
                 onInit(noteDetailEvent)
             }
+            is NoteDetailEvent.ClickedDelete -> {
+                onDeleteClicked()
+            }
+            is NoteDetailEvent.DeleteNote -> {
+                deleteApproved()
+            }
 
         }
+    }
+
+    private fun deleteApproved() {
+        deleteNoteUseCase.execute(currentNote!!)
+            .subscribe({
+                noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.Finish)
+            }, {
+                noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.ShowError(it.message.toString()))
+            })
+    }
+
+    private fun onDeleteClicked() {
+        noteDetailUiStateLiveData.postValue(
+            NoteDetailUIEvent.DeleteNote
+        )
     }
 
     private fun onInit(noteDetailEvent: NoteDetailEvent.Init) {

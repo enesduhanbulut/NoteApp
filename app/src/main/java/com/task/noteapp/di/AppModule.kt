@@ -5,10 +5,7 @@ import androidx.room.Room
 import com.task.noteapp.feature_note.data.data_source.local.NoteDatabase
 import com.task.noteapp.feature_note.domain.repository.NoteRepository
 import com.task.noteapp.feature_note.domain.repository.NoteRepositoryImpl
-import com.task.noteapp.feature_note.domain.use_case.AddNoteUseCase
-import com.task.noteapp.feature_note.domain.use_case.GetNoteUseCase
-import com.task.noteapp.feature_note.domain.use_case.GetNotesUseCase
-import com.task.noteapp.feature_note.domain.use_case.UpdateNoteUseCase
+import com.task.noteapp.feature_note.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,6 +37,7 @@ object AppModule {
     fun provideAddUseCase(repository: NoteRepository): AddNoteUseCase {
         return AddNoteUseCase(repository)
     }
+
     @Provides
     @Singleton
     fun provideGetNotesUseCase(repository: NoteRepository): GetNotesUseCase {
@@ -56,5 +54,11 @@ object AppModule {
     @Singleton
     fun provideUpdateNoteUseCase(repository: NoteRepository): UpdateNoteUseCase {
         return UpdateNoteUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteNoteUseCase(repository: NoteRepository): DeleteNoteUseCase {
+        return DeleteNoteUseCase(repository)
     }
 }
