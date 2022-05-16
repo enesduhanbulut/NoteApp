@@ -8,6 +8,7 @@ import com.task.noteapp.feature_note.domain.model.Note
 import com.task.noteapp.feature_note.domain.use_case.*
 import com.task.noteapp.feature_note.presentation.NoteColor
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
@@ -104,6 +105,8 @@ class NoteDetailViewModel @Inject constructor(
             this.noteDetailState.color.ordinal,
             this.noteDetailState.url
         )
+            .observeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
             .subscribe({
                 noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.ShowMessage("Note Saved"))
             }, {
