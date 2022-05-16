@@ -20,16 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/defaultNoteColor"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textAlignment="center"
-            tools:text="Sample Head\nSample Head" />
+            tools:text="Sample Head"/>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewTextViewBody"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/tinyMargin"
         android:backgroundTint="@color/defaultNoteColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +39,19 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/noteViewImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/bird"
+                android:layout_margin="@dimen/mediumMargin"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent">
+            </ImageView>
+
+
             <!--make this view as fragment for change input type-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/noteViewTextViewBody"
@@ -47,7 +60,7 @@
                 android:layout_margin="@dimen/smallMargin"
                 android:height="@dimen/noteViewBodyLength"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/noteViewImageView"
                 tools:text="Sample Body" />
 
             <com.google.android.material.textview.MaterialTextView
