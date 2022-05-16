@@ -4,7 +4,6 @@ import androidx.room.*
 import com.task.noteapp.feature_note.domain.model.Note
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface NoteDao {
@@ -12,7 +11,7 @@ interface NoteDao {
     fun getAllNotes(): Maybe<List<Note>>
 
     @Query("SELECT * FROM note WHERE id = :id")
-    fun getNoteById(id: Long): Maybe<Note>
+    fun getNoteById(id: Int): Maybe<Note>
 
     @Query("DELETE FROM note")
     fun deleteAllNotes(): Completable
@@ -22,5 +21,8 @@ interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: Note): Completable
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateNote(note: Note): Completable
 
 }

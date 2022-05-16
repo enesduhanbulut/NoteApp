@@ -6,15 +6,15 @@ import java.util.*
 
 @Entity(tableName = "note")
 data class Note(
-    val head: String,
-    val body: String,
-    val color: Int,
-    val url: String,
+    var head: String,
+    var body: String,
+    var color: Int,
+    var url: String,
 ) {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-    var folderId: Long = 0
+    var id: Int = 0
+    var folderId: Int = 0
     var lastModifiedData: Date = Date()
     var createDate: Date = Date()
     var isFavorite: Boolean = false

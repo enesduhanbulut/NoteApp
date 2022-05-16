@@ -12,7 +12,7 @@ interface FolderDao {
     fun getAllFolders(): Observable<Folder>
 
     @Query("SELECT * FROM folder WHERE id = :id")
-    fun getFolderById(id: Long): Maybe<Folder>
+    fun getFolderById(id: Int): Maybe<Folder>
 
     @Query("DELETE FROM folder")
     fun deleteAllFolders(): Completable

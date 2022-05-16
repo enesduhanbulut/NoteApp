@@ -6,7 +6,9 @@ import com.task.noteapp.feature_note.data.data_source.local.NoteDatabase
 import com.task.noteapp.feature_note.domain.repository.NoteRepository
 import com.task.noteapp.feature_note.domain.repository.NoteRepositoryImpl
 import com.task.noteapp.feature_note.domain.use_case.AddNoteUseCase
+import com.task.noteapp.feature_note.domain.use_case.GetNoteUseCase
 import com.task.noteapp.feature_note.domain.use_case.GetNotesUseCase
+import com.task.noteapp.feature_note.domain.use_case.UpdateNoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +42,19 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideGetNoteUseCase(repository: NoteRepository): GetNotesUseCase {
+    fun provideGetNotesUseCase(repository: NoteRepository): GetNotesUseCase {
         return GetNotesUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetNoteUseCase(repository: NoteRepository): GetNoteUseCase {
+        return GetNoteUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateNoteUseCase(repository: NoteRepository): UpdateNoteUseCase {
+        return UpdateNoteUseCase(repository)
     }
 }

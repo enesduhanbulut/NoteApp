@@ -11,12 +11,16 @@ class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
         return noteDao.getAllNotes();
     }
 
-    override fun getNoteById(id: Long): Maybe<Note> {
+    override fun getNoteById(id: Int): Maybe<Note> {
         return noteDao.getNoteById(id);
     }
 
     override fun saveNote(note: Note): Completable {
         return noteDao.insertNote(note);
+    }
+
+    override fun updateNote(note: Note): Completable {
+        return noteDao.updateNote(note);
     }
 
     override fun deleteNote(note: Note): Completable {
