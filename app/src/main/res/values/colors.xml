@@ -9,4 +9,12 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#fafafa</color>
     <color name="defaultNoteColor">#ffd54f</color>
+
+    <color name="orange_post_it_body">#ffa000</color>
+    <color name="orange_post_it_head">#ff7000</color>
+    <color name="yellow_post_it_body">#FFF79A</color>
+    <color name="yellow_post_it_head">#FFF79A</color>
+    <color name="purple_post_it_body">#ea80fc</color>
+    <color name="purple_post_it_head">#ea80fc</color>
+
 </resources>

@@ -4,4 +4,8 @@
     <dimen name="smallMargin">10dp</dimen>
     <dimen name="mediumMargin">20dp</dimen>
     <dimen name="noteViewBodyLength">256dp</dimen>
+    <dimen name="color_layout_height">40dp</dimen>
+    <dimen name="roundedButtonHeight">40dp</dimen>
+    <dimen name="roundedButtonWidth">20dp</dimen>
+    <dimen name="rounded_button_radius">30dp</dimen>
 </resources>
