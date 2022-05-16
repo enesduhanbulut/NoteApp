@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Observable
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM note")
-    fun getAllNotes(): Observable<Note>
+    fun getAllNotes(): Maybe<List<Note>>
 
     @Query("SELECT * FROM note WHERE id = :id")
     fun getNoteById(id: Long): Maybe<Note>

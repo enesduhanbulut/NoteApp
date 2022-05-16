@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 
 class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
-    override fun getAllNotes(): Observable<Note> {
+    override fun getAllNotes(): Maybe<List<Note>> {
         return noteDao.getAllNotes();
     }
 

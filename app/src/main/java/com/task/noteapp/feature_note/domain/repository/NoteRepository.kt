@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 
 interface NoteRepository {
-    fun getAllNotes(): Observable<Note>
+    fun getAllNotes(): Maybe<List<Note>>
     fun getNoteById(id: Long): Maybe<Note>
     fun saveNote(note: Note): Completable
     fun deleteNote(note: Note): Completable
