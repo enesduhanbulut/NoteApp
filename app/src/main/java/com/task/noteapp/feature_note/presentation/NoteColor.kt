@@ -1,4 +1,4 @@
-package com.task.noteapp.feature_note.presentaion.addoredit
+package com.task.noteapp.feature_note.presentation
 
 import com.task.noteapp.R
 

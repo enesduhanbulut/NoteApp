@@ -1,12 +1,12 @@
-package com.task.noteapp.feature_note.presentaion.list
+package com.task.noteapp.feature_note.presentation.list
 
-import android.R.attr.numColumns
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.task.noteapp.R
@@ -30,7 +30,9 @@ class NoteListFragment : Fragment() {
         recyclerViewNoteList = rootView.findViewById(R.id.recyclerViewNoteList)
         recyclerViewNoteList.layoutManager = StaggeredGridLayoutManager(2, 1)
 
-        val adapter = NoteListAdapter()
+        val adapter = NoteListAdapter {
+            noteListViewModel.onEvent(ListEvent.NoteSelected(it))
+        }
         recyclerViewNoteList.adapter = adapter
         noteListViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
             when (it) {
@@ -44,7 +46,9 @@ class NoteListFragment : Fragment() {
                     // TODO: implement message handling
                 }
                 is ListUIEvent.ShowNote -> {
-                    // TODO: navigate to note detail screen
+                    val action =
+                        NoteListFragmentDirections.toDetailPage(it.value.id)
+                    Navigation.findNavController(rootView).navigate(action)
                 }
             }
         }

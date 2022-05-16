@@ -1,4 +1,4 @@
-package com.task.noteapp.feature_note.presentaion.list
+package com.task.noteapp.feature_note.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

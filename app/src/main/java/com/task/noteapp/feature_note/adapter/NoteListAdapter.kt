@@ -12,13 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.task.noteapp.R
 import com.task.noteapp.feature_note.domain.model.Note
-import com.task.noteapp.feature_note.presentaion.addoredit.NoteColor
+import com.task.noteapp.feature_note.presentation.NoteColor
 
 
-class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
+class NoteListAdapter(private val clickListener: (Note) -> Unit) :
+    RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     private var notes: List<Note> = emptyList()
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
+    class ViewHolder(private val view: View, private val clickListener: (Note) -> Unit) :
+        RecyclerView.ViewHolder(view) {
         private val textViewHead: TextView = view.findViewById(R.id.textViewHead)
         private val textViewContent: TextView = view.findViewById(R.id.textViewtBody)
         private val textViewDate: TextView = view.findViewById(R.id.textViewDate)
@@ -30,8 +33,14 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
             textViewDate.text = note.createDate.toString()
             Glide.with(view).asBitmap().load(note.url).into(imageViewImage)
             layoutNote.setBackgroundColor(
-                ContextCompat.getColor(view.context,
-                NoteColor.values()[note.color].getBodyColor()))
+                ContextCompat.getColor(
+                    view.context,
+                    NoteColor.values()[note.color].getBodyColor()
+                )
+            )
+            layoutNote.setOnClickListener {
+                clickListener.invoke(note)
+            }
         }
     }
 
@@ -64,7 +73,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_note_list_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, clickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

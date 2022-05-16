@@ -1,4 +1,4 @@
-package com.task.noteapp.feature_note.presentaion.addoredit
+package com.task.noteapp.feature_note.presentation.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,14 +12,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.task.noteapp.R
+import com.task.noteapp.feature_note.presentation.NoteColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NoteAddOrEditFragment : Fragment() {
+class NoteDetailFragment : Fragment() {
+    private lateinit var viewType: ViewType
     private lateinit var layoutNote: LinearLayout
     private lateinit var buttonAdd: MaterialButton
     private lateinit var editTextBody: EditText
@@ -27,45 +30,49 @@ class NoteAddOrEditFragment : Fragment() {
     private lateinit var editTextURL: EditText
     private lateinit var editTextHead: EditText
     private lateinit var imageViewImage: ImageView
+    private val noteDetailViewModel: NoteDetailViewModel by viewModels()
+    private val args: NoteDetailFragmentArgs by navArgs()
 
-    private val noteAddOrEditViewModel: NoteAddOrEditViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val rootView: View = inflater.inflate(
-            R.layout.fragment_add_note,
+            R.layout.fragment_note_detail,
             container, false
         )
+        viewType = ViewType.EDIT
+        if (args.noteId == -1) {
+            viewType = ViewType.ADD
+        }
         initViews(rootView)
-
-        noteAddOrEditViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
+        noteDetailViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
             when (it) {
-                is AddOrEditUIEvent.UpdateTime -> {
-                    textViewDate.text = it.value
+                is NoteDetailUIEvent.UpdateUI->{
+                    editTextHead.setText(it.value.head)
+                    textViewDate.text = it.value.date
+                    editTextBody.setText(it.value.body)
+                    editTextURL.setText(it.value.url)
+                    layoutNote.setBackgroundColorWithInt(it.value.color.getBodyColor())
                 }
-                is AddOrEditUIEvent.ShowImage -> {
+                is NoteDetailUIEvent.ShowImage -> {
                     Glide.with(this).asBitmap().load(it.value).into(imageViewImage)
                     imageViewImage.visibility = View.VISIBLE
                 }
-                is AddOrEditUIEvent.UpdateColor -> {
-                    layoutNote.setBackgroundColorWithInt(it.color.getBodyColor())
-                }
-                is AddOrEditUIEvent.ClearImage -> {
+                is NoteDetailUIEvent.ClearImage -> {
                     Glide.with(this).clear(imageViewImage)
                 }
                 is
-                AddOrEditUIEvent.ShowError -> {
-                   Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
+                NoteDetailUIEvent.ShowError -> {
+                    Snackbar.make(layoutNote, it.message, Snackbar.LENGTH_LONG).show()
                 }
-                is AddOrEditUIEvent.ShowMessage -> {
-                    Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
+                is NoteDetailUIEvent.ShowMessage -> {
+                    Snackbar.make(layoutNote, it.message, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
 
-        noteAddOrEditViewModel.firstTimeLoad()
         return rootView
     }
 
@@ -80,7 +87,7 @@ class NoteAddOrEditFragment : Fragment() {
                     height = resources.getDimension(R.dimen.color_layout_height).toInt()
                     width = resources.getDimension(R.dimen.roundedButtonWidth).toInt()
                     setOnClickListener {
-                        noteAddOrEditViewModel.onEvent(AddOrEditEvent.SelectedColor(noteColor))
+                        noteDetailViewModel.onEvent(NoteDetailEvent.SelectedColor(noteColor))
                     }
                 }
             }
@@ -96,30 +103,39 @@ class NoteAddOrEditFragment : Fragment() {
 
         editTextHead.apply {
             addTextChangedListener {
-                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredHead(it.toString()))
+                noteDetailViewModel.onEvent(NoteDetailEvent.EnteredHead(it.toString()))
             }
         }
         editTextBody.apply {
             addTextChangedListener {
-                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredBody(it.toString()))
+                noteDetailViewModel.onEvent(NoteDetailEvent.EnteredBody(it.toString()))
             }
         }
         editTextURL.apply {
             addTextChangedListener {
-                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredURL(it.toString()))
+                noteDetailViewModel.onEvent(NoteDetailEvent.EnteredURL(it.toString()))
             }
         }
 
         buttonAdd.apply {
             setOnClickListener {
-                noteAddOrEditViewModel.onEvent(AddOrEditEvent.ClickedSave)
+                if (viewType == ViewType.ADD) {
+                    noteDetailViewModel.onEvent(NoteDetailEvent.ClickedSave)
+                } else {
+                    noteDetailViewModel.onEvent(NoteDetailEvent.ClickedUpdate)
+                }
+            }
+            text = if (viewType == ViewType.ADD) {
+                getString(R.string.add)
+            } else {
+                getString(R.string.edit)
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        noteAddOrEditViewModel.firstTimeLoad()
+        noteDetailViewModel.onEvent(NoteDetailEvent.Init(viewType, args.noteId))
     }
 
     private fun MaterialButton.setBackgroundColor(noteColor: NoteColor) {
