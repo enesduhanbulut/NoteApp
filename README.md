@@ -1,6 +1,6 @@
 # NoteApp
 A simple note app which storing includes title, content and image
-Technologies used:
+# Technologies used:
 - Kotlin
 - Android Studio
 - MVVM architecture
