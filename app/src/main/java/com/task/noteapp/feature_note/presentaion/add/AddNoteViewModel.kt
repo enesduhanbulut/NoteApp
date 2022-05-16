@@ -1,6 +1,5 @@
 package com.task.noteapp.feature_note.presentaion.add
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,11 +12,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AddNoteViewModel @Inject constructor(var addNoteUseCase: AddNoteUseCase) : ViewModel() {
     private var noteState: AddNoteState = AddNoteState()
-    private var noteUIState: AddNoteUIState = AddNoteUIState()
-    private val uiStateLiveData: MutableLiveData<AddNoteUIState> = MutableLiveData()
+    private val uiStateLiveData: MutableLiveData<UIEvent> = MutableLiveData()
     private val validateUrlUseCase = ValidateUrlUseCase()
     fun firstTimeLoad() {
-        uiStateLiveData.postValue(noteUIState)
+        uiStateLiveData.postValue(UIEvent.UpdateTime(Calendar.getInstance().time.toString()))
     }
 
     fun onEvent(event: AddEvent) {
@@ -26,21 +24,21 @@ class AddNoteViewModel @Inject constructor(var addNoteUseCase: AddNoteUseCase) :
                 noteState.head = event.value
             }
             is AddEvent.SelectedColor -> {
-                noteState.color = event.value.ordinal
-                if (noteState.color != noteUIState.color) {
-                    noteUIState.color = event.value.ordinal
-                    uiStateLiveData.postValue(noteUIState)
+                if (noteState.color != event.value.ordinal) {
+                    noteState.color = event.value.ordinal
+                    uiStateLiveData.postValue(UIEvent.UpdateColor(event.value))
                 }
             }
             is AddEvent.EnteredBody -> {
                 noteState.body = event.value
             }
             is AddEvent.EnteredURL -> {
-                noteState.url = event.value
                 validateUrlUseCase.execute(event.value).let { isValid ->
                     if (isValid) {
-                        noteUIState.url = event.value
-                        uiStateLiveData.postValue(noteUIState)
+                        noteState.url = event.value
+                        uiStateLiveData.postValue(UIEvent.ShowImage(event.value))
+                    } else {
+                        uiStateLiveData.postValue(UIEvent.ClearImage(event.value))
                     }
                 }
             }
@@ -48,7 +46,7 @@ class AddNoteViewModel @Inject constructor(var addNoteUseCase: AddNoteUseCase) :
         }
     }
 
-    fun uiStateLiveData(): LiveData<AddNoteUIState> {
+    fun uiStateLiveData(): LiveData<UIEvent> {
         return uiStateLiveData
     }
 
@@ -57,14 +55,6 @@ class AddNoteViewModel @Inject constructor(var addNoteUseCase: AddNoteUseCase) :
         var body: String = "",
         var url: String = "",
         var color: Int = 0,
-    )
-
-    data class AddNoteUIState(
-        var color: Int = 0,
-        var url: String = "",
-        var isUrlValid: Boolean = false,
-        var image: Bitmap? = null,
-        var date: String = Calendar.getInstance().time.toString()
     )
 
 }

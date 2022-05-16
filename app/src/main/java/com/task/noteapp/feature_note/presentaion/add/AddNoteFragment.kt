@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.task.noteapp.R
@@ -40,13 +39,23 @@ class AddNoteFragment : Fragment() {
         )
         initViews(rootView)
 
-        addNoteViewModel.uiStateLiveData().observe(viewLifecycleOwner, Observer {
-            textViewDate.text = it.date
-            layoutNote.setBackgroundColorWithInt(NoteColor.values()[it.color].getBodyColor())
-            if (it.isUrlValid) {
-                Glide.with(this).load(it.url).into(imageViewImage)
+        addNoteViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
+            when (it) {
+                is UIEvent.UpdateTime -> {
+                    textViewDate.text = it.value
+                }
+                is UIEvent.ShowImage -> {
+                    Glide.with(this).asBitmap().load(it.value).into(imageViewImage)
+                    imageViewImage.visibility = View.VISIBLE
+                }
+                is UIEvent.UpdateColor -> {
+                    layoutNote.setBackgroundColorWithInt(it.color.getBodyColor())
+                }
+                is UIEvent.ClearImage -> {
+                    Glide.with(this).clear(imageViewImage)
+                }
             }
-        })
+        }
 
         addNoteViewModel.firstTimeLoad()
         return rootView
