@@ -13,7 +13,6 @@
         <action
             android:id="@+id/toDetailPage"
             app:destination="@id/noteDetailFragment"
-            app:launchSingleTop="false"
             app:popUpTo="@id/noteListFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -26,10 +25,5 @@
             android:name="noteId"
             android:defaultValue="-1"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_noteDetailFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment"
-            app:launchSingleTop="false"
-            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

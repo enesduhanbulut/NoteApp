@@ -109,6 +109,7 @@ class NoteDetailViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribe({
                 noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.ShowMessage("Note Saved"))
+                noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.Finish)
             }, {
                 noteDetailUiStateLiveData.postValue(it.message?.let { it1 ->
                     NoteDetailUIEvent.ShowError(
@@ -128,6 +129,7 @@ class NoteDetailViewModel @Inject constructor(
         )
             .subscribe({
                 noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.ShowMessage("Note Updated"))
+                noteDetailUiStateLiveData.postValue(NoteDetailUIEvent.Finish)
             }, {
                 noteDetailUiStateLiveData.postValue(it.message?.let { it1 ->
                     NoteDetailUIEvent.ShowError(

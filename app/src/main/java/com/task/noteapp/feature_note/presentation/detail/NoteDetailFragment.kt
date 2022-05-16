@@ -67,7 +67,6 @@ class NoteDetailFragment : Fragment() {
                                 getString(R.string.note_deleted),
                                 Snackbar.LENGTH_LONG
                             ).show()
-                            requireActivity().onBackPressed()
                         }
                         .setNegativeButton(getString(R.string.No)) { dialog, which ->
                             dialog.dismiss()
@@ -90,7 +89,7 @@ class NoteDetailFragment : Fragment() {
                 }
                 is NoteDetailUIEvent.Finish -> {
                     Navigation.findNavController(requireView()).navigate(
-                        R.id.action_noteDetailFragment_to_noteListFragment
+                        R.id.noteListFragment
                     )
                 }
             }
