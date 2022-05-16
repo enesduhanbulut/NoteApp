@@ -2,4 +2,5 @@
 <resources>
     <dimen name="smallMargin">10dp</dimen>
     <dimen name="mediumMargin">20dp</dimen>
+    <dimen name="noteViewBodyLength">256dp</dimen>
 </resources>

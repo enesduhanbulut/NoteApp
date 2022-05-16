@@ -7,10 +7,17 @@
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/primaryDarkColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+        <stroke android:width="1dp" android:color="@color/secondaryColor" />
+        <corners android:radius="2dp" />
+
+    </shape>
+
 </resources>
