@@ -1,4 +1,4 @@
-package com.task.noteapp.feature_note.presentaion.add
+package com.task.noteapp.feature_note.presentaion.addoredit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import com.task.noteapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNoteFragment : Fragment() {
+class NoteAddOrEditFragment : Fragment() {
     private lateinit var layoutNote: LinearLayout
     private lateinit var buttonAdd: MaterialButton
     private lateinit var editTextBody: EditText
@@ -28,7 +28,7 @@ class AddNoteFragment : Fragment() {
     private lateinit var editTextHead: EditText
     private lateinit var imageViewImage: ImageView
 
-    private val addNoteViewModel: AddNoteViewModel by viewModels()
+    private val noteAddOrEditViewModel: NoteAddOrEditViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,32 +40,32 @@ class AddNoteFragment : Fragment() {
         )
         initViews(rootView)
 
-        addNoteViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
+        noteAddOrEditViewModel.uiStateLiveData().observe(viewLifecycleOwner) {
             when (it) {
-                is UIEvent.UpdateTime -> {
+                is AddOrEditUIEvent.UpdateTime -> {
                     textViewDate.text = it.value
                 }
-                is UIEvent.ShowImage -> {
+                is AddOrEditUIEvent.ShowImage -> {
                     Glide.with(this).asBitmap().load(it.value).into(imageViewImage)
                     imageViewImage.visibility = View.VISIBLE
                 }
-                is UIEvent.UpdateColor -> {
+                is AddOrEditUIEvent.UpdateColor -> {
                     layoutNote.setBackgroundColorWithInt(it.color.getBodyColor())
                 }
-                is UIEvent.ClearImage -> {
+                is AddOrEditUIEvent.ClearImage -> {
                     Glide.with(this).clear(imageViewImage)
                 }
                 is
-                UIEvent.ShowError -> {
+                AddOrEditUIEvent.ShowError -> {
                    Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
                 }
-                is UIEvent.ShowMessage -> {
+                is AddOrEditUIEvent.ShowMessage -> {
                     Snackbar.make(layoutNote,it.message,Snackbar.LENGTH_LONG).show()
                 }
             }
         }
 
-        addNoteViewModel.firstTimeLoad()
+        noteAddOrEditViewModel.firstTimeLoad()
         return rootView
     }
 
@@ -80,7 +80,7 @@ class AddNoteFragment : Fragment() {
                     height = resources.getDimension(R.dimen.color_layout_height).toInt()
                     width = resources.getDimension(R.dimen.roundedButtonWidth).toInt()
                     setOnClickListener {
-                        addNoteViewModel.onEvent(AddEvent.SelectedColor(noteColor))
+                        noteAddOrEditViewModel.onEvent(AddOrEditEvent.SelectedColor(noteColor))
                     }
                 }
             }
@@ -96,30 +96,30 @@ class AddNoteFragment : Fragment() {
 
         editTextHead.apply {
             addTextChangedListener {
-                addNoteViewModel.onEvent(AddEvent.EnteredHead(it.toString()))
+                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredHead(it.toString()))
             }
         }
         editTextBody.apply {
             addTextChangedListener {
-                addNoteViewModel.onEvent(AddEvent.EnteredBody(it.toString()))
+                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredBody(it.toString()))
             }
         }
         editTextURL.apply {
             addTextChangedListener {
-                addNoteViewModel.onEvent(AddEvent.EnteredURL(it.toString()))
+                noteAddOrEditViewModel.onEvent(AddOrEditEvent.EnteredURL(it.toString()))
             }
         }
 
         buttonAdd.apply {
             setOnClickListener {
-                addNoteViewModel.onEvent(AddEvent.ClickedSave)
+                noteAddOrEditViewModel.onEvent(AddOrEditEvent.ClickedSave)
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNoteViewModel.firstTimeLoad()
+        noteAddOrEditViewModel.firstTimeLoad()
     }
 
     private fun MaterialButton.setBackgroundColor(noteColor: NoteColor) {

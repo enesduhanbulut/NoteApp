@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.task.noteapp.R
 import com.task.noteapp.feature_note.domain.model.Note
-import com.task.noteapp.feature_note.presentaion.add.NoteColor
+import com.task.noteapp.feature_note.presentaion.addoredit.NoteColor
 
 
 class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
