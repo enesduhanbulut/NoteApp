@@ -12,7 +12,9 @@
         tools:layout="@layout/note_list_fragment">
         <action
             android:id="@+id/toDetailPage"
-            app:destination="@id/noteDetailFragment" />
+            app:destination="@id/noteDetailFragment"
+            app:popUpTo="@id/noteListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"

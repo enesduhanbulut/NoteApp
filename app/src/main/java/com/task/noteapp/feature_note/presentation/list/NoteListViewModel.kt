@@ -18,6 +18,7 @@ class NoteListViewModel @Inject constructor(var getNoteUseCase: GetNotesUseCase)
             is ListEvent.NoteSelected -> {
                 noteState.selectedNote = event.value
                 listStateLiveData.postValue(ListUIEvent.ShowNote(event.value))
+                onCleared()
             }
             is ListEvent.GetNotes -> {
                 getNoteUseCase.execute()

@@ -63,7 +63,6 @@
                     android:layout_margin="@dimen/mediumMargin"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/bird"
                     android:visibility="visible" />
 
                 <com.google.android.material.textview.MaterialTextView
