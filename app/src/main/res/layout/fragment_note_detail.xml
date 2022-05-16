@@ -6,13 +6,20 @@
     android:layout_height="match_parent"
     tools:layout_margin="@dimen/smallMargin">
 
-    <LinearLayout
-        android:id="@+id/layoutColors"
+    <HorizontalScrollView
+        android:id="@+id/scrollViewColors"
         android:layout_width="match_parent"
         android:layout_height="@dimen/color_layout_height"
         android:layout_marginHorizontal="@dimen/smallMargin"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layoutColors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -21,7 +28,7 @@
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf=" parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutColors">
+        app:layout_constraintTop_toBottomOf="@id/scrollViewColors">
 
 
         <ScrollView
@@ -29,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp">
+
 
             <LinearLayout
                 android:id="@+id/layoutNote"
@@ -112,12 +120,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonDelete"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/mediumMargin"
         android:backgroundTint="?attr/colorError"
         android:text="@string/delete"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonAdd" />

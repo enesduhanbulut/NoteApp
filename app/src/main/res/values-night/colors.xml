@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink_post_it_head">#ff65a3</color>
+    <color name="pink_post_it_body">#ff65a3</color>
+    <color name="orange_post_it_body">#ffa000</color>
+    <color name="orange_post_it_head">#ff7000</color>
+    <color name="yellow_post_it_body">#FFF79A</color>
+    <color name="yellow_post_it_head">#FFF000</color>
+    <color name="purple_post_it_body">#ea80fc</color>
+    <color name="purple_post_it_head">#ea80fc</color>
+    <color name="transparent">#00000000</color>
+    <color name="blue_post_it_body">#7afcff</color>
+    <color name="blue_post_it_head">#7afcff</color>
+</resources>
