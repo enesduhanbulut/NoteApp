@@ -7,11 +7,14 @@ import java.util.*
 @Entity(tableName = "note")
 data class Note(
     @PrimaryKey val id: Long,
+    val folderId: Long,
     val head: String,
     val body: String,
     val lastModifiedData: Date,
     val createDate: Date,
     val isFavorite: Boolean,
-    val isArchived: Boolean,
-    val color: Int
+    val isTrash: Boolean,
+    val isCompleted: Boolean,
+    val color: Int,
+    val url : String
 )
